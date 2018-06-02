@@ -66,17 +66,76 @@ See the source code for all the unit constants.
 
 [COLOR="DeepSkyBlue"][SIZE="5"][B]Natives[/B][/SIZE][/COLOR]
 
-[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]Now[/FONT][/SIZE][/COLOR]
+[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]Timestamp:Now()[/FONT][/SIZE][/COLOR]
 
-A wrapper around [FONT="courier new"]gettime()[/FONT] that returns a [FONT="courier new"]Timestamp:[/FONT] tagged value for more type-safe code.
+A tag-safe replacement for [FONT="courier new"]gettime()[/FONT]. Does not take arguments like [FONT="courier new"]gettime[/FONT] does, always returns the current number of seconds since the Unix epoch.
 
 [COLOR="SlateGray"][SIZE="5"][FONT="courier new"]TimeFormat[/FONT][/SIZE][/COLOR]
 
 A formatting function that takes a [FONT="courier new"]Timestamp:[/FONT] with a format string and outputs a formatted time string using the standard C/++ specifiers (like [FONT="courier new"]%Y[/FONT] for 4-digit year, [FONT="courier new"]%m[/FONT] for month, etc.)
 
+For example:
+
+[CODE]
+[COLOR="Blue"]new[/COLOR]
+    Timestamp:ts = Timestamp:[COLOR="Purple"]1527929232[/COLOR],
+    output[[COLOR="Purple"]256[/COLOR]];
+
+TimeFormat(ts, WEEKDAY_NAME, output);
+print(output);
+[/CODE]
+
+Will print [FONT="courier new"]Saturday[/FONT].
+
+[CODE]
+[COLOR="Blue"]new[/COLOR]
+    Timestamp:ts = Timestamp:[COLOR="Purple"]1527929232[/COLOR],
+    output[[COLOR="Purple"]256[/COLOR]];
+
+TimeFormat(ts, MONTH_NAME, output);
+print(output);
+[/CODE]
+
+Will print [FONT="courier new"]June[/FONT].
+
+There are also a set of templates for standard formats:
+
+[LIST]
+[*][FONT="courier new"]HUMAN_DATE[/FONT]: [FONT="courier new"]31/05/18[/FONT]
+[*][FONT="courier new"]ISO6801_TIME[/FONT]: [FONT="courier new"]09:55:22[/FONT]
+[*][FONT="courier new"]ISO6801_DATE[/FONT]: [FONT="courier new"]2018-05-31[/FONT]
+[*][FONT="courier new"]ISO6801_FULL_UTC[/FONT]: [FONT="courier new"]2018-05-31T09:55:22Z[/FONT]
+[*][FONT="courier new"]ISO6801_FULL_LOCAL[/FONT]: [FONT="courier new"]2018-05-31T09:55:22[/FONT]
+[/LIST]
+
+For example, to create an ISO-8601 standard format date:
+
+[CODE]
+[COLOR="Blue"]new[/COLOR]
+    Timestamp:ts = Timestamp:[COLOR="Purple"]1527929232[/COLOR],
+    output[[COLOR="Purple"]256[/COLOR]];
+
+TimeFormat(ts, ISO[COLOR="Purple"]6801[/COLOR]_FULL_UTC, output);
+print(output);
+[/CODE]
+
+Will print [FONT="courier new"]2018-06-02T08:47:12Z[/FONT].
+
+Because this is a standard format, it will easily be processed by most modern programming languages and databases.
+
 [COLOR="SlateGray"][SIZE="5"][FONT="courier new"]TimeParse[/FONT][/SIZE][/COLOR]
 
 A parser for strings containing dates and times that uses the C/++ specifiers to perform the reverse of [FONT="courier new"]TimeFormat[/FONT].
+
+For example:
+
+[CODE]
+[COLOR="Blue"]new[/COLOR] Timestamp:ts, ret;
+ret = TimeParse([COLOR="Purple"]"[COLOR="Purple"]2018[/COLOR][COLOR="Purple"]-06[/COLOR][COLOR="Purple"]-02[/COLOR]T[COLOR="Purple"]08[/COLOR]:[COLOR="Purple"]47[/COLOR]:[COLOR="Purple"]12[/COLOR]Z"[/COLOR], ISO[COLOR="Purple"]6801[/COLOR]_FULL_UTC, ts);
+printf([COLOR="Purple"]"%d"[/COLOR], _:ts);
+[/CODE]
+
+Will print [FONT="courier new"]1527929232[/FONT].
 
 [COLOR="SlateGray"][SIZE="5"][FONT="courier new"]DurationParse[/FONT][/SIZE][/COLOR]
 
