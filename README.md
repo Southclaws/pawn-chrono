@@ -32,9 +32,9 @@ compilation.
 These tags are also used by this library to provide useful conversion functions
 between units of time.
 
-* `Timestamp:`: A tag that indicates a cell contains a Unix timestamp.
-* `Milliseconds:`: Cell contains milliseconds duration.
-* `Seconds:`: Cell contains seconds duration.
+* `Timestamp:` A tag that indicates a cell contains a Unix timestamp.
+* `Milliseconds:` Cell contains milliseconds duration.
+* `Seconds:` Cell contains seconds duration.
 * `Minutes`: Cell contains minutes duration.
 * `Hours`: Cell contains hours duration.
 * `Days`: Cell contains days duration.
