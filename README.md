@@ -71,10 +71,10 @@ See the source code for all the unit constants.
 
 ### Natives
 
-#### `Now`
+#### `Timestamp:Now()`
 
-A wrapper around `gettime()` that returns a `Timestamp:` tagged value for more
-type-safe code.
+A tag-safe replacement for `gettime()`. Does not take arguments like `gettime`
+does, always returns the current number of seconds since the Unix epoch.
 
 #### `TimeFormat`
 
@@ -82,10 +82,70 @@ A formatting function that takes a `Timestamp:` with a format string and outputs
 a formatted time string using the standard C/++ specifiers (like `%Y` for
 4-digit year, `%m` for month, etc.)
 
+For example:
+
+```pawn
+new
+    Timestamp:ts = Timestamp:1527929232,
+    output[256];
+
+TimeFormat(ts, WEEKDAY_NAME, output);
+print(output);
+```
+
+Will print `Saturday`.
+
+```pawn
+new
+    Timestamp:ts = Timestamp:1527929232,
+    output[256];
+
+TimeFormat(ts, MONTH_NAME, output);
+print(output);
+```
+
+Will print `June`.
+
+##### Templates
+
+There are also a set of templates for standard formats:
+
+* `HUMAN_DATE`: `31/05/18`
+* `ISO6801_TIME`: `09:55:22`
+* `ISO6801_DATE`: `2018-05-31`
+* `ISO6801_FULL_UTC`: `2018-05-31T09:55:22Z`
+* `ISO6801_FULL_LOCAL`: `2018-05-31T09:55:22`
+
+For example, to create an ISO-8601 standard format date:
+
+```pawn
+new
+    Timestamp:ts = Timestamp:1527929232,
+    output[256];
+
+TimeFormat(ts, ISO6801_FULL_UTC, output);
+print(output);
+```
+
+Will print `2018-06-02T08:47:12Z`.
+
+Because this is a standard format, it will easily be processed by most modern
+programming languages and databases.
+
 #### `TimeParse`
 
 A parser for strings containing dates and times that uses the C/++ specifiers to
 perform the reverse of `TimeFormat`.
+
+For example:
+
+```pawn
+new Timestamp:ts, ret;
+ret = TimeParse("2018-06-02T08:47:12Z", ISO6801_FULL_UTC, ts);
+printf("%d", _:ts);
+```
+
+Will print `1527929232`.
 
 #### `DurationParse`
 
