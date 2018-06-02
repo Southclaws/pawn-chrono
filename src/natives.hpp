@@ -12,6 +12,7 @@ namespace chrono = std::chrono;
 #include "common.hpp"
 
 namespace Natives {
+cell Now(AMX* amx, cell* params);
 cell TimeFormat(AMX* amx, cell* params);
 cell TimeParse(AMX* amx, cell* params);
 }

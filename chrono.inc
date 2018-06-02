@@ -89,10 +89,10 @@ const Weeks:YearInWeeks = Weeks:52;
 #define TIME_ZONE_ABV     "%Z" // The time zone abbreviation. If the time zone abbreviation is not available, failbit will be set.  UTC is used for sys_time.
 #define PERCENTAGE        "%%" // A % character.
 
+
 // -
 // Format Tempates
 // -
-
 
 #define HUMAN_DATE         "%d/%m/%y"           // 31/05/18
 #define ISO6801_TIME       "%H:%M:%S"            // 09:55:22
@@ -105,7 +105,7 @@ const Weeks:YearInWeeks = Weeks:52;
 // Natives
 // -
 
-native Timestamp:Now(&hour=0, &minute=0, &second=0) = gettime;
+native Timestamp:Now();
 native TimeFormat(Timestamp:ts, const fmt[], output[], len = sizeof output);
 native TimeParse(const string[], const fmt[], &Timestamp:output);
 

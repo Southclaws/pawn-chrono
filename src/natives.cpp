@@ -1,5 +1,10 @@
 #include "natives.hpp"
 
+cell Natives::Now(AMX* amx, cell* params)
+{
+    return static_cast<int>(std::chrono::seconds(std::time(NULL)).count());
+}
+
 cell Natives::TimeFormat(AMX* amx, cell* params)
 {
     int unix_timestamp = static_cast<int>(params[1]);

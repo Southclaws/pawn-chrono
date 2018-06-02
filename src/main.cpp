@@ -7,6 +7,7 @@
 logprintf_t logprintf;
 
 extern "C" AMX_NATIVE_INFO nativeList[] = {
+    { "Now", Natives::Now },
     { "TimeFormat", Natives::TimeFormat },
     { "TimeParse", Natives::TimeParse },
     { 0, 0 }
