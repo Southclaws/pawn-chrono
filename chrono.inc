@@ -14,6 +14,8 @@
 // Unit Conversions - Months/Years are rough approximations
 // -
 
+#define TIME_UNITS {Milliseconds,Seconds,Minutes,Hours,Days,Weeks,Months,Years}
+
 const Milliseconds:SecondInMilliseconds = Milliseconds:1_000;
 const Milliseconds:MinuteInMilliseconds = Milliseconds:60_000;
 const Milliseconds:HourInMilliseconds =   Milliseconds:3_600_000;
@@ -23,15 +25,15 @@ const Milliseconds:MonthInMilliseconds =  Milliseconds:2_629_746_000;
 // const Milliseconds:YearInMilliseconds =   Milliseconds:31556952000; // overflow!
 
 const Seconds:MinuteInSeconds = Seconds:60;
-const Seconds:HourInSeconds =   Seconds:3600;
-const Seconds:DayInSeconds =    Seconds:86400;
-const Seconds:WeekInSeconds =   Seconds:604800;
-const Seconds:MonthInSeconds =  Seconds:2629746;
-const Seconds:YearInSeconds =   Seconds:31556952;
+const Seconds:HourInSeconds =   Seconds:3_600;
+const Seconds:DayInSeconds =    Seconds:86_400;
+const Seconds:WeekInSeconds =   Seconds:604_800;
+const Seconds:MonthInSeconds =  Seconds:2_629_746;
+const Seconds:YearInSeconds =   Seconds:31_556_952;
 
 const Minutes:HourInMinutes =  Minutes:60;
-const Minutes:DayInMinutes =   Minutes:1440;
-const Minutes:WeekInMinutes =  Minutes:10080;
+const Minutes:DayInMinutes =   Minutes:1_440;
+const Minutes:WeekInMinutes =  Minutes:10_080;
 const Minutes:MonthInMinutes = Minutes:(Minutes:MonthInSeconds / Minutes:60);
 const Minutes:YearInMinutes =  Minutes:(Minutes:MonthInMinutes * Minutes:12);
 
@@ -105,4 +107,31 @@ const Weeks:YearInWeeks = Weeks:52;
 
 native Timestamp:Now() = gettime;
 native TimeFormat(Timestamp:ts, const fmt[], output[], len = sizeof output);
-native Timestamp:TimeAdd(Timestamp:ts, Duration:d);
+native TimeParse(const string[], const fmt[], &Timestamp:output);
+native Timestamp:TimeAdd(Timestamp:ts, TIME_UNITS:d);
+
+
+// -
+// Conversion Operators
+// -
+
+// Difference
+stock Seconds:operator-(Timestamp:future, Timestamp:past) {
+	return Seconds:(_:future - _:past);
+}
+
+// Seconds
+stock Timestamp:operator+(Timestamp:t, Seconds:d) {
+	return Timestamp:(_:t + _:d);
+}
+stock Timestamp:operator-(Timestamp:t, Seconds:d) {
+	return Timestamp:(_:t - _:d);
+}
+
+// Minutes
+stock Timestamp:operator+(Timestamp:t, Minutes:d) {
+	return Timestamp:(_:t + (_:MinuteInSeconds * _:d));
+}
+stock Timestamp:operator-(Timestamp:t, Minutes:d) {
+	return Timestamp:(_:t - (_:MinuteInSeconds * _:d));
+}
