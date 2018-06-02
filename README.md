@@ -76,7 +76,7 @@ See the source code for all the unit constants.
 A tag-safe replacement for `gettime()`. Does not take arguments like `gettime`
 does, always returns the current number of seconds since the Unix epoch.
 
-#### `TimeFormat`
+#### `TimeFormat(Timestamp:ts, const fmt[], output[], len = sizeof output)`
 
 A formatting function that takes a `Timestamp:` with a format string and outputs
 a formatted time string using the standard C/++ specifiers (like `%Y` for
@@ -132,7 +132,7 @@ Will print `2018-06-02T08:47:12Z`.
 Because this is a standard format, it will easily be processed by most modern
 programming languages and databases.
 
-#### `TimeParse`
+#### `TimeParse(const string[], const fmt[], &Timestamp:output)`
 
 A parser for strings containing dates and times that uses the C/++ specifiers to
 perform the reverse of `TimeFormat`.
@@ -147,7 +147,7 @@ printf("%d", _:ts);
 
 Will print `1527929232`.
 
-#### `DurationParse`
+#### `DurationParse(const string[], &Milliseconds:output)`
 
 Parses duration strings and outputs their values in milliseconds, for example:
 

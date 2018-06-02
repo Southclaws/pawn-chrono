@@ -70,7 +70,7 @@ See the source code for all the unit constants.
 
 A tag-safe replacement for [FONT="courier new"]gettime()[/FONT]. Does not take arguments like [FONT="courier new"]gettime[/FONT] does, always returns the current number of seconds since the Unix epoch.
 
-[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]TimeFormat[/FONT][/SIZE][/COLOR]
+[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]TimeFormat(Timestamp:ts, const fmt[], output[], len = sizeof output)[/FONT][/SIZE][/COLOR]
 
 A formatting function that takes a [FONT="courier new"]Timestamp:[/FONT] with a format string and outputs a formatted time string using the standard C/++ specifiers (like [FONT="courier new"]%Y[/FONT] for 4-digit year, [FONT="courier new"]%m[/FONT] for month, etc.)
 
@@ -123,7 +123,7 @@ Will print [FONT="courier new"]2018-06-02T08:47:12Z[/FONT].
 
 Because this is a standard format, it will easily be processed by most modern programming languages and databases.
 
-[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]TimeParse[/FONT][/SIZE][/COLOR]
+[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]TimeParse(const string[], const fmt[], &Timestamp:output)[/FONT][/SIZE][/COLOR]
 
 A parser for strings containing dates and times that uses the C/++ specifiers to perform the reverse of [FONT="courier new"]TimeFormat[/FONT].
 
@@ -137,7 +137,7 @@ printf([COLOR="Purple"]"%d"[/COLOR], _:ts);
 
 Will print [FONT="courier new"]1527929232[/FONT].
 
-[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]DurationParse[/FONT][/SIZE][/COLOR]
+[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]DurationParse(const string[], &Milliseconds:output)[/FONT][/SIZE][/COLOR]
 
 Parses duration strings and outputs their values in milliseconds, for example:
 
