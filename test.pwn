@@ -12,7 +12,8 @@ main() {
 
 Test:Now() {
     new Timestamp:now = Now();
-    ASSERT(_:now == gettime());
+    new nowbare = gettime();
+    ASSERT(_:now == nowbare);
 }
 
 Test:TimeFormat_WEEKDAY_NAME_ABV() {
@@ -202,7 +203,7 @@ Test:TimeFormat_TIME_12() {
 
     TimeFormat(ts, TIME_12, output);
     printf("- output: '%s'", output);
-    ASSERT(!strcmp(output, "08:47:12"));
+    ASSERT(!strcmp(output, "08:47:12", false, 8));
 }
 
 Test:TimeFormat_HM_COLON() {

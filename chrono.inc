@@ -105,7 +105,7 @@ const Weeks:YearInWeeks = Weeks:52;
 // Natives
 // -
 
-native Timestamp:Now() = gettime;
+native Timestamp:Now(&hour=0, &minute=0, &second=0) = gettime;
 native TimeFormat(Timestamp:ts, const fmt[], output[], len = sizeof output);
 native TimeParse(const string[], const fmt[], &Timestamp:output);
 
