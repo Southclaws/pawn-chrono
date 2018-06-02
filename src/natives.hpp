@@ -3,8 +3,8 @@
 
 #include <chrono>
 #include <ctime>
-#include <string>
 #include <date/date.h>
+#include <string>
 namespace chrono = std::chrono;
 
 #include <amx/amx2.h>
@@ -14,7 +14,6 @@ namespace chrono = std::chrono;
 namespace Natives {
 cell TimeFormat(AMX* amx, cell* params);
 cell TimeParse(AMX* amx, cell* params);
-cell TimeAdd(AMX* amx, cell* params);
 }
 
 #endif
