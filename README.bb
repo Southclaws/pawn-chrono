@@ -18,6 +18,8 @@ Include in your code and begin using the library:
 [COLOR="Blue"]#include <chrono>[/COLOR]
 [/CODE]
 
+Or, if you’re oldschool, check the [URL="https://github.com/Southclaws/pawn-chrono/releases"]GitHub Releases Page[/URL].
+
 [COLOR="RoyalBlue"][SIZE="6"][B]Usage[/B][/SIZE][/COLOR]
 
 This library provides functions, constants string constants and functions for working with times and dates.

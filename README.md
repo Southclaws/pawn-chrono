@@ -18,6 +18,9 @@ Include in your code and begin using the library:
 #include <chrono>
 ```
 
+Or, if you're oldschool, check the
+[GitHub Releases Page](https://github.com/Southclaws/pawn-chrono/releases).
+
 ## Usage
 
 This library provides functions, constants string constants and functions for
