@@ -8,7 +8,16 @@
     "runtime": {
         "plugins": ["Southclaws/pawn-chrono"]
     },
-    "build": {
-        "version": "3.10.7"
+    "resources": [
+    {
+      "name": "chrono.so",
+      "archive": false,
+      "platform": "linux"
+    },
+    {
+      "name": "chrono.dll",
+      "archive": false,
+      "platform": "windows"
     }
+  ]
 }
