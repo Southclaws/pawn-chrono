@@ -4,6 +4,7 @@
 #include <chrono>
 #include <ctime>
 #include <date/date.h>
+#include <map>
 #include <string>
 namespace chrono = std::chrono;
 
@@ -15,6 +16,7 @@ namespace Natives {
 cell Now(AMX* amx, cell* params);
 cell TimeFormat(AMX* amx, cell* params);
 cell TimeParse(AMX* amx, cell* params);
+cell DurationParse(AMX* amx, cell* params);
 }
 
 #endif

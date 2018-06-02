@@ -10,6 +10,55 @@ main() {
     //
 }
 
+Test:DurationParse_Mil() {
+    new Milliseconds:output;
+    new ret = DurationParse("5ms", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Milliseconds:5);
+}
+
+Test:DurationParse_Sec() {
+    new Milliseconds:output;
+    new ret = DurationParse("5s", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Milliseconds:5000);
+}
+
+Test:DurationParse_Min() {
+    new Milliseconds:output;
+    new ret = DurationParse("10m", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Milliseconds:600000);
+}
+
+Test:DurationParse_Hour() {
+    new Milliseconds:output;
+    new ret = DurationParse("3h", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Milliseconds:10800000);
+}
+
+Test:DurationParse_Day() {
+    new Milliseconds:output;
+    new ret = DurationParse("1d", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Milliseconds:86400000);
+}
+
+Test:DurationParse_MinSec() {
+    new Milliseconds:output;
+    new ret = DurationParse("8m5s", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Milliseconds:485000);
+}
+
+Test:DurationParse_All() {
+    new Milliseconds:output;
+    new ret = DurationParse("1d3h10m5s5ms", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Milliseconds:(86400000 + 10800000 + 600000 + 5000 + 5));
+}
+
 Test:Now() {
     new Timestamp:now = Now();
     new nowbare = gettime();

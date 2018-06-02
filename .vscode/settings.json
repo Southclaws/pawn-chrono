@@ -17,6 +17,7 @@
         "filesystem": "cpp",
         "xstring": "cpp",
         "system_error": "cpp",
-        "ctime": "cpp"
+        "ctime": "cpp",
+        "xlocale": "cpp"
     }
 }

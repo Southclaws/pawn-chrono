@@ -10,6 +10,7 @@ extern "C" AMX_NATIVE_INFO nativeList[] = {
     { "Now", Natives::Now },
     { "TimeFormat", Natives::TimeFormat },
     { "TimeParse", Natives::TimeParse },
+    { "DurationParse", Natives::DurationParse },
     { 0, 0 }
 };
 
