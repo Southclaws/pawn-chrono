@@ -459,4 +459,35 @@ Test:MinutesOperators() {
 
     t -= d;
     ASSERT(t == Timestamp:1527929232);
+
+    ASSERT((Timestamp:1527929532 - Timestamp:1527929232) == Seconds:300);
+}
+
+Test:HoursOperators() {
+    new
+        Timestamp:t = Timestamp:1527929232,
+        Hours:d = Hours:3;
+
+    t += d;
+    ASSERT(t == Timestamp:1527940032);
+
+    t -= d;
+    ASSERT(t == Timestamp:1527929232);
+
+    ASSERT((Timestamp:1527940032 - Timestamp:1527929232) == Seconds:10800);
+}
+
+Test:DaysOperators() {
+    new
+        Timestamp:t = Timestamp:1527929232,
+        Days:d = Days:3;
+
+    t += d;
+    ASSERT(t == Timestamp:1528188432);
+    printf("- output: %d", _:t);
+
+    t -= d;
+    ASSERT(t == Timestamp:1527929232);
+
+    ASSERT((Timestamp:1527940032 - Timestamp:1527929232) == Seconds:10800);
 }

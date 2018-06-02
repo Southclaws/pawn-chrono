@@ -135,3 +135,19 @@ stock Timestamp:operator+(Timestamp:t, Minutes:d) {
 stock Timestamp:operator-(Timestamp:t, Minutes:d) {
 	return Timestamp:(_:t - (_:MinuteInSeconds * _:d));
 }
+
+// Hours
+stock Timestamp:operator+(Timestamp:t, Hours:d) {
+	return Timestamp:(_:t + (_:HourInSeconds * _:d));
+}
+stock Timestamp:operator-(Timestamp:t, Hours:d) {
+	return Timestamp:(_:t - (_:HourInSeconds * _:d));
+}
+
+// Days
+stock Timestamp:operator+(Timestamp:t, Days:d) {
+	return Timestamp:(_:t + (_:DayInSeconds * _:d));
+}
+stock Timestamp:operator-(Timestamp:t, Days:d) {
+	return Timestamp:(_:t - (_:DayInSeconds * _:d));
+}
