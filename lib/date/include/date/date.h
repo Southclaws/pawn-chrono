@@ -90,7 +90,7 @@ namespace date
 
 #if defined(_MSC_VER) && (!defined(__clang__) || (_MSC_VER < 1910))
 // MSVC
-#  if _MSC_VER < 1910
+#  if _MSC_VER < 1915 // modified from 1910 to fix date.h build
 //   before VS2017
 #    define CONSTDATA const
 #    define CONSTCD11

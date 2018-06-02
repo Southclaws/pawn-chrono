@@ -8,7 +8,7 @@ include_directories(
 	${SAMPSDK_INCLUDE_DIR}
 )
 
-add_samp_plugin(chrono
+add_samp_plugin(pawn-chrono
 	${SAMPSDK_DIR}/amxplugin.cpp
 	${SAMPSDK_DIR}/amxplugin2.cpp
 	${SAMPSDK_DIR}/amx/getch.c
@@ -19,3 +19,4 @@ add_samp_plugin(chrono
 	plugin.def
 )
 
+set_target_properties(pawn-chrono PROPERTIES OUTPUT_NAME "chrono")
