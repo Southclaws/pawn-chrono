@@ -151,3 +151,82 @@ stock Timestamp:operator+(Timestamp:t, Days:d) {
 stock Timestamp:operator-(Timestamp:t, Days:d) {
 	return Timestamp:(_:t - (_:DayInSeconds * _:d));
 }
+
+
+// -
+// Helpers
+// -
+
+stock DurationFormat(Seconds:duration, output[], len = sizeof output) {
+	new
+		Seconds:years,
+		Seconds:days,
+		Seconds:hours,
+		Seconds:minutes;
+
+	if(duration > YearInSeconds) {
+		years = (duration / YearInSeconds);
+		duration -= (YearInSeconds * years);
+	}
+
+	if(duration > DayInSeconds) {
+		days = (duration / DayInSeconds);
+		duration -= (DayInSeconds * days);
+	}
+
+	if(duration > HourInSeconds) {
+		hours = (duration / HourInSeconds);
+		duration -= (HourInSeconds * hours);
+	}
+
+	if(duration > MinuteInSeconds) {
+		minutes = (duration / MinuteInSeconds);
+		duration -= (MinuteInSeconds * minutes);
+	}
+
+	if(years > Seconds:0) {
+		format(
+			output,
+			len,
+			"%s%d year%s",
+			output,
+			_:years,
+			(_:years > 1) ? ("s, ") : (", ")
+		);
+	}
+	if(days > Seconds:0) {
+		format(
+			output,
+			len,
+			"%s%d day%s",
+			output,
+			_:days,
+			(_:days > 1) ? ("s, ") : (", ")
+		);
+	}
+	if(hours > Seconds:0) {
+		format(
+			output,
+			len,
+			"%s%d hour%s",
+			output,
+			_:hours,
+			(_:hours > 1) ? ("s, ") : (", ")
+		);
+	}
+	if(minutes > Seconds:0) {
+		format(
+			output,
+			len,
+			"%s%d minute%s",
+			output,
+			_:minutes,
+			(_:minutes > 1) ? ("s, ") : (", ")
+		);
+	}
+
+	// trim the trailing comma
+	output[strlen(output) - 2] = EOS;
+
+	return 0;
+}
