@@ -68,11 +68,16 @@ See the source code for all the unit constants.
 
 [COLOR="DeepSkyBlue"][SIZE="5"][B]Natives[/B][/SIZE][/COLOR]
 
-[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]Timestamp:Now()[/FONT][/SIZE][/COLOR]
+[COLOR="SlateGray"][SIZE="4"][FONT="courier new"]Timestamp:Now()[/FONT][/SIZE][/COLOR]
 
 A tag-safe replacement for [FONT="courier new"]gettime()[/FONT]. Does not take arguments like [FONT="courier new"]gettime[/FONT] does, always returns the current number of seconds since the Unix epoch.
 
-[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]TimeFormat(Timestamp:ts, const fmt[], output[], len = sizeof output)[/FONT][/SIZE][/COLOR]
+[CODE]
+[COLOR="Blue"]new[/COLOR] Timestamp:now = Now();
+printf([COLOR="Purple"]"%d"[/COLOR], _:now); [COLOR="Green"]// prints a large number, like 1528015380[/COLOR]
+[/CODE]
+
+[COLOR="SlateGray"][SIZE="4"][FONT="courier new"]TimeFormat(Timestamp:ts, const fmt[], output[], len = sizeof output)[/FONT][/SIZE][/COLOR]
 
 A formatting function that takes a [FONT="courier new"]Timestamp:[/FONT] with a format string and outputs a formatted time string using the standard C/++ specifiers (like [FONT="courier new"]%Y[/FONT] for 4-digit year, [FONT="courier new"]%m[/FONT] for month, etc.)
 
@@ -100,6 +105,18 @@ print(output);
 
 Will print [FONT="courier new"]June[/FONT].
 
+In the old ctime plugin, this would have looked like:
+
+[CODE]
+[COLOR="Blue"]new[/COLOR] Time:unix = Time:gettime();
+[COLOR="Blue"]new[/COLOR] time[e_tm];
+localtime(unix, time);
+[COLOR="Blue"]new[/COLOR] buf[[COLOR="Purple"]128[/COLOR]];
+strftime(buf, sizeof(buf), [COLOR="Purple"]"%A"[/COLOR], tm); [COLOR="Green"]// buf: Saturday[/COLOR]
+[/CODE]
+
+As you can see, chrono removes the need to first convert a unix timestamp to a [FONT="courier new"]e_tm[/FONT] structure before using it in [FONT="courier new"]strftime[/FONT].
+
 There are also a set of templates for standard formats:
 
 [LIST]
@@ -125,7 +142,7 @@ Will print [FONT="courier new"]2018-06-02T08:47:12Z[/FONT].
 
 Because this is a standard format, it will easily be processed by most modern programming languages and databases.
 
-[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]TimeParse(const string[], const fmt[], &Timestamp:output)[/FONT][/SIZE][/COLOR]
+[COLOR="SlateGray"][SIZE="4"][FONT="courier new"]TimeParse(const string[], const fmt[], &Timestamp:output)[/FONT][/SIZE][/COLOR]
 
 A parser for strings containing dates and times that uses the C/++ specifiers to perform the reverse of [FONT="courier new"]TimeFormat[/FONT].
 
@@ -139,7 +156,7 @@ printf([COLOR="Purple"]"%d"[/COLOR], _:ts);
 
 Will print [FONT="courier new"]1527929232[/FONT].
 
-[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]DurationParse(const string[], &Milliseconds:output)[/FONT][/SIZE][/COLOR]
+[COLOR="SlateGray"][SIZE="4"][FONT="courier new"]DurationParse(const string[], &Milliseconds:output)[/FONT][/SIZE][/COLOR]
 
 Parses duration strings and outputs their values in milliseconds, for example:
 
@@ -155,11 +172,11 @@ Parses duration strings and outputs their values in milliseconds, for example:
 
 [COLOR="DeepSkyBlue"][SIZE="5"][B]Operators[/B][/SIZE][/COLOR]
 
-[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]Seconds:operator-(Timestamp:future, Timestamp:past)[/FONT][/SIZE][/COLOR]
+[COLOR="SlateGray"][SIZE="4"][FONT="courier new"]Seconds:operator-(Timestamp:future, Timestamp:past)[/FONT][/SIZE][/COLOR]
 
 Casts timestamp difference to [FONT="courier new"]Seconds:[/FONT] for usage in duration-based functions.
 
-[COLOR="SlateGray"][SIZE="5"][FONT="courier new"]Timestamp:operator+(Timestamp:t, T:d)[/FONT][/SIZE][/COLOR]
+[COLOR="SlateGray"][SIZE="4"][FONT="courier new"]Timestamp:operator+(Timestamp:t, T:d)[/FONT][/SIZE][/COLOR]
 
 Where [FONT="courier new"]T[/FONT] is one of [FONT="courier new"]Seconds[/FONT], [FONT="courier new"]Minutes[/FONT], [FONT="courier new"]Hours[/FONT] or [FONT="courier new"]Days[/FONT].
 

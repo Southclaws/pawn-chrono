@@ -79,6 +79,11 @@ See the source code for all the unit constants.
 A tag-safe replacement for `gettime()`. Does not take arguments like `gettime`
 does, always returns the current number of seconds since the Unix epoch.
 
+```pawn
+new Timestamp:now = Now();
+printf("%d", _:now); // prints a large number, like 1528015380
+```
+
 #### `TimeFormat(Timestamp:ts, const fmt[], output[], len = sizeof output)`
 
 A formatting function that takes a `Timestamp:` with a format string and outputs
@@ -108,6 +113,19 @@ print(output);
 ```
 
 Will print `June`.
+
+In the old ctime plugin, this would have looked like:
+
+```pawn
+new Time:unix = Time:gettime();
+new time[e_tm];
+localtime(unix, time);
+new buf[128];
+strftime(buf, sizeof(buf), "%A", tm); // buf: Saturday
+```
+
+As you can see, chrono removes the need to first convert a unix timestamp to a
+`e_tm` structure before using it in `strftime`.
 
 ##### Templates
 
