@@ -124,7 +124,8 @@ new buf[128];
 strftime(buf, sizeof(buf), "%A", tm); // buf: Saturday
 ```
 
-As you can see, chrono removes the need to first convert a unix timestamp to a `e_tm` structure before using it in `strftime`.
+As you can see, chrono removes the need to first convert a unix timestamp to a
+`e_tm` structure before using it in `strftime`.
 
 ##### Templates
 

@@ -72,6 +72,11 @@ See the source code for all the unit constants.
 
 A tag-safe replacement for [FONT="courier new"]gettime()[/FONT]. Does not take arguments like [FONT="courier new"]gettime[/FONT] does, always returns the current number of seconds since the Unix epoch.
 
+[CODE]
+[COLOR="Blue"]new[/COLOR] Timestamp:now = Now();
+printf([COLOR="Purple"]"%d"[/COLOR], _:now); [COLOR="Green"]// prints a large number, like 1528015380[/COLOR]
+[/CODE]
+
 [COLOR="SlateGray"][SIZE="5"][FONT="courier new"]TimeFormat(Timestamp:ts, const fmt[], output[], len = sizeof output)[/FONT][/SIZE][/COLOR]
 
 A formatting function that takes a [FONT="courier new"]Timestamp:[/FONT] with a format string and outputs a formatted time string using the standard C/++ specifiers (like [FONT="courier new"]%Y[/FONT] for 4-digit year, [FONT="courier new"]%m[/FONT] for month, etc.)
@@ -99,6 +104,18 @@ print(output);
 [/CODE]
 
 Will print [FONT="courier new"]June[/FONT].
+
+In the old ctime plugin, this would have looked like:
+
+[CODE]
+[COLOR="Blue"]new[/COLOR] Time:unix = Time:gettime();
+[COLOR="Blue"]new[/COLOR] time[e_tm];
+localtime(unix, time);
+[COLOR="Blue"]new[/COLOR] buf[[COLOR="Purple"]128[/COLOR]];
+strftime(buf, sizeof(buf), [COLOR="Purple"]"%A"[/COLOR], tm); [COLOR="Green"]// buf: Saturday[/COLOR]
+[/CODE]
+
+As you can see, chrono removes the need to first convert a unix timestamp to a [FONT="courier new"]e_tm[/FONT] structure before using it in [FONT="courier new"]strftime[/FONT].
 
 There are also a set of templates for standard formats:
 
