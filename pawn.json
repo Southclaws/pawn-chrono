@@ -1,23 +1,33 @@
 {
-    "user": "Southclaws",
-    "repo": "pawn-chrono",
-    "entry": "test.pwn",
-    "output": "test/gamemodes/test.amx",
-    "dependencies": ["Southclaws/samp-stdlib"],
-    "dev_dependencies": ["pawn-lang/YSI-Includes"],
-    "runtime": {
-        "plugins": ["Southclaws/pawn-chrono"]
-    },
-    "resources": [
-    {
-      "name": "chrono.so",
-      "archive": false,
-      "platform": "linux"
-    },
-    {
-      "name": "chrono.dll",
-      "archive": false,
-      "platform": "windows"
-    }
-  ]
+	"user": "Southclaws",
+	"repo": "pawn-chrono",
+	"tag": "1.1.0",
+	"entry": "test.pwn",
+	"output": "test/gamemodes/test.amx",
+	"dependencies": [
+		"Southclaws/samp-stdlib"
+	],
+	"dev_dependencies": [
+		"pawn-lang/YSI-Includes",
+		"oscar-broman/strlib"
+	],
+	"runtime": {
+		"version": "0.3.7",
+		"mode": "server",
+		"plugins": [
+			"Southclaws/pawn-chrono"
+		],
+		"rcon_password": "password",
+		"port": 7777
+	},
+	"resources": [
+		{
+			"name": "chrono.so",
+			"platform": "linux"
+		},
+		{
+			"name": "chrono.dll",
+			"platform": "windows"
+		}
+	]
 }

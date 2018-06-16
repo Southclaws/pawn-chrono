@@ -37,7 +37,14 @@ cell Natives::TimeParse(AMX* amx, cell* params)
     std::istringstream is(string);
     date::sys_seconds d;
 
-    date::from_stream(is, fmt.c_str(), d);
+	try {
+		if (date::from_stream(is, fmt.c_str(), d).fail()) {
+			return 1;
+		}
+	} catch (std::exception& e) {
+		logprintf("ERROR: date::from_stream failed: %s", e.what());
+		return 1;
+	}
 
     *output = static_cast<cell>(d.time_since_epoch().count());
 

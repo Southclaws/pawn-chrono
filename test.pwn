@@ -3,6 +3,7 @@
 #include "chrono.inc"
 
 #include <a_samp>
+#include <strlib>
 #include <YSI\y_testing>
 
 
@@ -477,6 +478,22 @@ Test:TimeParse_ISO6801_FULL_UTC() {
     ret = TimeParse("2018-06-02T08:47:12Z", ISO6801_FULL_UTC, ts);
     printf("- output: %d: %d", ret, _:ts);
     ASSERT(ts == Timestamp:1527929232);
+}
+
+Test:TimeParse_Invalid() {
+    new
+        year = 1997,
+        month = 3,
+        day = 2,
+        ret,
+        Timestamp:seconds,
+        Seconds:agetime;
+
+    TimeParse(sprintf("%i%i%i", year, month, day), "%Y%m%d", seconds);
+    agetime = Now() - seconds;
+
+    printf("- output: %d: %d agetime: %d", ret, _:seconds, _:agetime);
+    ASSERT(seconds == Timestamp:0);
 }
 
 Test:TimestampDifference() {
