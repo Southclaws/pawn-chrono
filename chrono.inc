@@ -225,6 +225,17 @@ stock DurationFormat(Seconds:duration, output[], len = sizeof output) {
 		);
 	}
 
+	if(duration > Seconds:0) {
+		format(
+			output,
+			len,
+			"%s%d second%s",
+			output,
+			_:duration,
+			(_:duration > 1) ? ("s, ") : (", ")
+		);
+	}
+
 	// trim the trailing comma
 	output[strlen(output) - 2] = EOS;
 
