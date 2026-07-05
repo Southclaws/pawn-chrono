@@ -109,6 +109,7 @@ native Timestamp:Now();
 native TimeFormat(Timestamp:ts, const fmt[], output[], len = sizeof output);
 native TimeParse(const string[], const fmt[], &Timestamp:output);
 native DurationParse(const string[], &Milliseconds:output);
+native DurationParseSeconds(const string[], &Seconds:output);
 
 
 // -

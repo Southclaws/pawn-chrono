@@ -67,6 +67,27 @@ Test:DurationParse_All() {
     ASSERT(output == Milliseconds:(86400000 + 10800000 + 600000 + 5000 + 5));
 }
 
+Test:DurationParseSeconds_Sec() {
+    new Seconds:output;
+    new ret = DurationParseSeconds("5s", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Seconds:5);
+}
+
+Test:DurationParseSeconds_Ms() {
+    new Seconds:output;
+    new ret = DurationParseSeconds("5ms", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Seconds:0);
+}
+
+Test:DurationParseSeconds_30Days() {
+    new Seconds:output;
+    new ret = DurationParseSeconds("30d", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Seconds:2592000);
+}
+
 Test:Now() {
     new Timestamp:now = Now();
     new nowbare = gettime();

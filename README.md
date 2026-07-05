@@ -180,6 +180,21 @@ Parses duration strings and outputs their values in milliseconds, for example:
 * `8m5s` > `485000`
 * `1d3h10m5s5ms` > `97805005`
 
+Note that a Pawn cell is a signed 32-bit integer, so millisecond output
+overflows for durations longer than ~24 days. For longer durations (such as
+ban periods) use `DurationParseSeconds` below.
+
+#### `DurationParseSeconds(const string[], &Seconds:output)`
+
+Identical to `DurationParse`, but outputs the duration in whole seconds. This
+avoids the millisecond overflow, letting you parse durations up to ~68 years.
+Sub-second precision is truncated, for example:
+
+* `5ms` > `0`
+* `5s` > `5`
+* `10m` > `600`
+* `30d` > `2592000`
+
 ### Operators
 
 #### `Seconds:operator-(Timestamp:future, Timestamp:past)`

@@ -17,6 +17,7 @@ cell Now(AMX* amx, cell* params);
 cell TimeFormat(AMX* amx, cell* params);
 cell TimeParse(AMX* amx, cell* params);
 cell DurationParse(AMX* amx, cell* params);
+cell DurationParseSeconds(AMX* amx, cell* params);
 }
 
 #endif
