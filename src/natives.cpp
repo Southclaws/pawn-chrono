@@ -51,37 +51,27 @@ cell Natives::TimeParse(AMX* amx, cell* params)
     return 0;
 }
 
-cell Natives::DurationParse(AMX* amx, cell* params)
+static int parseDurationMs(const std::string& input, long long& resultMs)
 {
-    std::string input = amx_GetCppString(amx, params[1]);
-    cell* output;
-    amx_GetAddr(amx, params[2], &output);
-
     size_t idx = 0,
            length = input.length();
 
-    bool negative = false;
-    if (input[idx] == '-') {
-        negative = true;
-        idx++;
-    } else if (input[idx] == '+') {
-        negative = false;
+    if (input[idx] == '-' || input[idx] == '+') {
         idx++;
     }
 
-    // The next character must be [0-9.]
     if (!(input[idx] == '.' || '0' <= input[idx] && input[idx] <= '9')) {
         return 1;
     }
 
-    int numberBegin = -1,
-        value;
+    int numberBegin = -1;
+    long long value = 0;
 
     bool gotValue = false,
          gotUnit = false;
 
     std::string unit;
-    int resultDuration = 0;
+    resultMs = 0;
 
     while (idx <= length) {
         if (!gotValue) {
@@ -93,7 +83,7 @@ cell Natives::DurationParse(AMX* amx, cell* params)
             } else {
                 if (!('0' <= input[idx] && input[idx] <= '9')) {
                     gotValue = true;
-                    value = std::stoi(input.substr(numberBegin, idx - numberBegin));
+                    value = std::stoll(input.substr(numberBegin, idx - numberBegin));
                     numberBegin = -1;
 
                     continue;
@@ -118,7 +108,7 @@ cell Natives::DurationParse(AMX* amx, cell* params)
         if (unitMap.find(unit) == unitMap.end()) {
             return 2;
         }
-        resultDuration += static_cast<int>(value * unitMap.at(unit).count());
+        resultMs += value * unitMap.at(unit).count();
 
         if (input[idx] == 0) {
             break;
@@ -129,7 +119,39 @@ cell Natives::DurationParse(AMX* amx, cell* params)
         unit = std::string();
     }
 
-    *output = resultDuration;
+    return 0;
+}
+
+cell Natives::DurationParse(AMX* amx, cell* params)
+{
+    std::string input = amx_GetCppString(amx, params[1]);
+    cell* output;
+    amx_GetAddr(amx, params[2], &output);
+
+    long long resultMs = 0;
+    int ret = parseDurationMs(input, resultMs);
+    if (ret != 0) {
+        return ret;
+    }
+
+    *output = static_cast<cell>(resultMs);
+
+    return 0;
+}
+
+cell Natives::DurationParseSeconds(AMX* amx, cell* params)
+{
+    std::string input = amx_GetCppString(amx, params[1]);
+    cell* output;
+    amx_GetAddr(amx, params[2], &output);
+
+    long long resultMs = 0;
+    int ret = parseDurationMs(input, resultMs);
+    if (ret != 0) {
+        return ret;
+    }
+
+    *output = static_cast<cell>(resultMs / 1000);
 
     return 0;
 }

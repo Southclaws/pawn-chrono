@@ -15,7 +15,7 @@ Test:DurationFormat() {
     new output[256];
     DurationFormat(Seconds:((86400 * 390) + 3800), output);
     print(output);
-    ASSERT(!strcmp(output, "1 year, 24 days, 19 hours, 14 minutes"));
+    ASSERT(!strcmp(output, "1 year, 24 days, 19 hours, 14 minutes, 8 seconds"));
 }
 
 Test:DurationParse_Mil() {
@@ -65,6 +65,27 @@ Test:DurationParse_All() {
     new ret = DurationParse("1d3h10m5s5ms", output);
     printf("- output: %d: %d", ret, _:output);
     ASSERT(output == Milliseconds:(86400000 + 10800000 + 600000 + 5000 + 5));
+}
+
+Test:DurationParseSeconds_Sec() {
+    new Seconds:output;
+    new ret = DurationParseSeconds("5s", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Seconds:5);
+}
+
+Test:DurationParseSeconds_Ms() {
+    new Seconds:output;
+    new ret = DurationParseSeconds("5ms", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Seconds:0);
+}
+
+Test:DurationParseSeconds_30Days() {
+    new Seconds:output;
+    new ret = DurationParseSeconds("30d", output);
+    printf("- output: %d: %d", ret, _:output);
+    ASSERT(output == Seconds:2592000);
 }
 
 Test:Now() {
