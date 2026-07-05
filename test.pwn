@@ -15,7 +15,7 @@ Test:DurationFormat() {
     new output[256];
     DurationFormat(Seconds:((86400 * 390) + 3800), output);
     print(output);
-    ASSERT(!strcmp(output, "1 year, 24 days, 19 hours, 14 minutes"));
+    ASSERT(!strcmp(output, "1 year, 24 days, 19 hours, 14 minutes, 8 seconds"));
 }
 
 Test:DurationParse_Mil() {
