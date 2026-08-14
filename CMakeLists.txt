@@ -1,12 +1,17 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 
 project(pawn-chrono)
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/lib/cmake-modules")
 
 if(UNIX)
-	set(CMAKE_CXX_FLAGS "-m32 -static -fvisibility=hidden")
-	set(CMAKE_C_FLAGS "-m32 -static -fvisibility=hidden")
+	option(PAWN_CHRONO_STATIC "Statically link the Linux plugin" ON)
+	set(PAWN_CHRONO_LINK_FLAGS "")
+	if(PAWN_CHRONO_STATIC)
+		set(PAWN_CHRONO_LINK_FLAGS "-static-libgcc -static-libstdc++")
+	endif()
+	set(CMAKE_CXX_FLAGS "-m32 ${PAWN_CHRONO_LINK_FLAGS} -fvisibility=hidden")
+	set(CMAKE_C_FLAGS "-m32 ${PAWN_CHRONO_LINK_FLAGS} -fvisibility=hidden")
 	set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS OFF)
 endif()
 
@@ -27,8 +32,8 @@ if(UNIX)
 	set(ENABLE_DATE_TESTING OFF CACHE BOOL "Enable unit tests")
 	set(USE_SYSTEM_TZ_DB ON CACHE BOOL "Use the operating system's timezone database")
 elseif(WIN32)
-	set(ENABLE_DATE_TESTING OFF)
-	set(USE_SYSTEM_TZ_DB ON)
+	set(ENABLE_DATE_TESTING OFF CACHE BOOL "Enable unit tests" FORCE)
+	set(USE_SYSTEM_TZ_DB ON CACHE BOOL "Use the operating system's timezone database" FORCE)
 endif()
 
 add_subdirectory(lib/date)
