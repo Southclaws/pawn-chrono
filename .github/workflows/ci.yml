@@ -1,0 +1,105 @@
+name: Build and release
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    name: Linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build static plugin
+        run: |
+          docker build --tag pawn-chrono-build .
+          docker run --rm --volume "$PWD/test/plugins:/root/test/plugins" pawn-chrono-build
+          docker run --rm --entrypoint /bin/mv \
+            --volume "$PWD/test/plugins:/root/test/plugins" \
+            pawn-chrono-build \
+            /root/test/plugins/chrono.so /root/test/plugins/chrono-static.so
+
+      - name: Build dynamically linked plugin
+        run: |
+          docker run --rm \
+            --env CMAKE_ARGS=-DPAWN_CHRONO_STATIC=OFF \
+            --volume "$PWD/test/plugins:/root/test/plugins" \
+            pawn-chrono-build
+
+      - name: Stage artifacts
+        run: |
+          mkdir -p artifacts
+          cp test/plugins/chrono.so test/plugins/chrono-static.so \
+            chrono.inc artifacts/
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pawn-chrono-linux
+          path: artifacts/
+          if-no-files-found: error
+
+  windows:
+    name: Windows
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: cmake -S . -B build -A Win32
+
+      - name: Build plugin
+        run: cmake --build build --config Release
+
+      - name: Stage artifacts
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path artifacts
+          $plugin = Get-ChildItem -Path . -Filter chrono.dll -Recurse | Select-Object -First 1
+          if (-not $plugin) { throw "chrono.dll was not produced" }
+          Copy-Item $plugin.FullName, chrono.inc -Destination artifacts
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pawn-chrono-windows
+          path: artifacts/
+          if-no-files-found: error
+
+  release:
+    name: GitHub release
+    if: startsWith(github.ref, 'refs/tags/')
+    needs:
+      - linux
+      - windows
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download Linux artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: pawn-chrono-linux
+          path: release
+
+      - name: Download Windows artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: pawn-chrono-windows
+          path: release
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" release/* --generate-notes --verify-tag
