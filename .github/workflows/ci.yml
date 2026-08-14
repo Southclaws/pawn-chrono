@@ -57,7 +57,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure CMake
-        run: cmake -S . -B build -A Win32
+        run: cmake -S . -B build -A Win32 -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
       - name: Build plugin
         run: cmake --build build --config Release
